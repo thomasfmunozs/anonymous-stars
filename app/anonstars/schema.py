@@ -1,12 +1,20 @@
 from marshmallow import Schema, fields
 
-class StarReviewSchema(Schema):
-  id = fields.Int(required=True)
-  repo_name = fields.Str()
-  full_name = fields.Str()
-  language = fields.Str()
-  description = fields.Str()
-  repo_url = fields.URL()
 
-class KudoSchema(StarReviewSchema):
-  user_id = fields.Email(required=True)
+# Users Schema
+class UserSchema(Schema):
+    id = fields.Int(required=True)
+    username = fields.Str()
+    encrypted_pass = fields.Str()
+    email = fields.Email()
+    options = fields.Str()
+
+
+# Stars schema
+class StarSchema(Schema):
+    id = fields.Int(required=True)
+    rcv_user = fields.Nested(UserSchema)
+    snd_user = fields.Nested(UserSchema)
+    comments = fields.Str()
+    timestamps = fields.DateTime()
+    is_anon = fields.Boolean(falsy=True)
