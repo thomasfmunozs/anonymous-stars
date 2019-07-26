@@ -33,6 +33,8 @@ class UserHandler extends React.Component {
     return users;
   }
 
+  searchUser = id => this.state.users.find(user => user.id === id)
+
   render() {
     const { user, users } = this.state;
     return (
@@ -40,7 +42,8 @@ class UserHandler extends React.Component {
         {
           user,
           users,
-          setUser: this.setUser
+          setUser: this.setUser,
+          searchUser: this.searchUser,
         }
       }>
         {this.props.children}
