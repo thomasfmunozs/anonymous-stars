@@ -16,5 +16,5 @@ class StarSchema(Schema):
     rcv_user = fields.Nested(UserSchema)
     snd_user = fields.Nested(UserSchema)
     comments = fields.Str()
-    timestamps = fields.DateTime()
+    date = fields.DateTime()
     is_anon = fields.Boolean(falsy=True)

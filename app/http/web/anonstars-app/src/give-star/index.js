@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { UserConsumer } from '../userContext';
+import Container from '@material-ui/core/Container';
 
-
+import GiveStarForm from './GiveStarForm';
 
 class GiveStar extends React.Component {
   state = {
@@ -22,16 +23,9 @@ class GiveStar extends React.Component {
             return <Redirect to='/' />
           }
           return (
-            <div>
-              <p>
-                Aqui no hay nada más que el user
-              </p>
-              <p>
-                {username}
-              </p>
-
-              {users.map(u => <p key={u.name}>Nombre: {u.name} - {u.starCount} estrellas</p>)}
-            </div>
+            <Container>
+              <GiveStarForm />
+            </Container>
           )
         }}
       </UserConsumer>
