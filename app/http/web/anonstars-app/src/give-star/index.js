@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { UserConsumer } from '../userContext';
 
 
-class Home extends Component {
+
+class GiveStar extends React.Component {
+  state = {
+    startGiven: false
+  };
 
   render() {
+    const { startGiven } = this.state;
+    if (startGiven) {
+      return <Redirect to='/home' />
+    }
     return (
       <UserConsumer>
         {({ user, users }) => {
@@ -21,17 +29,14 @@ class Home extends Component {
               <p>
                 {username}
               </p>
-              {users.map(u => <p key={u.name}>Nombre: {u.name} - {u.starCount} estrellas</p>)}
-              <p>
-                <Link to='/give-star' variant="contained" color="primary">Dar estrellas </Link>
-              </p>
-            </div>
 
+              {users.map(u => <p key={u.name}>Nombre: {u.name} - {u.starCount} estrellas</p>)}
+            </div>
           )
         }}
       </UserConsumer>
-    );
+    )
   }
 }
 
-export default Home;
+export default GiveStar
