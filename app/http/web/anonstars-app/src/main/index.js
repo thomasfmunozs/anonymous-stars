@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 
-import Login from '../login'
-import Home from '../home'
+import { UserProvider } from '../userContext';
+
+import Login from '../login';
+import Home from '../home';
+import GiveStar from '../give-star';
 
 class Main extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route path="/home" />
-        </Switch>
-     </Router>
+      <UserProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route path="/home" component={Home} />
+            <Route path="/give-star" component={GiveStar} />
+          </Switch>
+        </Router>
+      </UserProvider>
     )
   }
 }
