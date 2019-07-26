@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
-
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { UserConsumer } from '../userContext';
 
-import style from './style.css';
+
 
 class GiveStar extends React.Component {
   state = {
@@ -12,14 +11,14 @@ class GiveStar extends React.Component {
 
   render() {
     const { startGiven } = this.state;
-    if(startGiven){
+    if (startGiven) {
       return <Redirect to='/home' />
     }
     return (
       <UserConsumer>
-        {({user}) => {
+        {({ user, users }) => {
           const { username = '', loggedIn } = user;
-          if (!loggedIn){
+          if (!loggedIn) {
             return <Redirect to='/' />
           }
           return (
@@ -30,6 +29,8 @@ class GiveStar extends React.Component {
               <p>
                 {username}
               </p>
+
+              {users.map(u => <p key={u.name}>Nombre: {u.name} - {u.starCount} estrellas</p>)}
             </div>
           )
         }}
