@@ -1,24 +1,25 @@
-import os
 from pymongo import MongoClient
 
-COLLECTION_NAME = 'kudos'
+COLLECTION_NAME = 'anonymous_stars'
+MONGOURL = "mongodb://0.0.0.0:27017/"
+
 
 class MongoRepository(object):
- def __init__(self):
-   mongo_url = os.environ.get('MONGO_URL')
-   self.db = MongoClient(mongo_url).kudos
 
- def find_all(self, selector):
-   return self.db.kudos.find(selector)
- 
- def find(self, selector):
-   return self.db.kudos.find_one(selector)
- 
- def create(self, kudo):
-   return self.db.kudos.insert_one(kudo)
+    def __init__(self):
+        self.db = MongoClient(MONGOURL).kudos
 
- def update(self, selector, kudo):
-   return self.db.kudos.replace_one(selector, kudo).modified_count
+    def find_all(self, selector):
+        return self.db.anonymous_stars.find(selector)
  
- def delete(self, selector):
-   return self.db.kudos.delete_one(selector).deleted_count
+    def find(self, selector):
+        return self.db.anonymous_stars.find_one(selector)
+ 
+    def create(self, kudo):
+        return self.db.anonymous_stars.insert_one(kudo)
+
+    def update(self, selector, anonstar):
+        return self.db.anonymous_stars.replace_one(selector, anonstar).modified_count
+ 
+    def delete(self, selector):
+        return self.db.anonymous_stars.delete_one(selector).deleted_count
