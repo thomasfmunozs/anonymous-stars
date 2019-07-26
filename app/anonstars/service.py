@@ -32,12 +32,12 @@ class Service(object):
         self.repo_client.create_star(data)
         return self.dump_star(data)
 
-    def update_star_with(self, repo_id, starReview):
-        records_affected = self.repo_client.update({'user_id': self.user_id, 'repo_id': repo_id}, self.prepare_kudo(starReview))
+    def update_star_with(self, star_id):
+        records_affected = self.repo_client.update({'id': star_id})
         return records_affected > 0
 
-    def delete_kudo_for(self, repo_id):
-        records_affected = self.repo_client.delete({'user_id': self.user_id, 'repo_id': repo_id})
+    def delete_star_for(self, star_id):
+        records_affected = self.repo_client.delete({'id': star_id})
         return records_affected > 0
 
     def dump_star(self, data):
