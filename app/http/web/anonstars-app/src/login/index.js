@@ -6,8 +6,6 @@ import { UserConsumer } from '../userContext';
 
 import LoginComponent from './LoginComponent'
 
-import style from './style.css'
-
 class Login extends Component {
   state = { username: '' };
 
