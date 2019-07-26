@@ -1,18 +1,24 @@
 class Repository(object):
- def __init__(self, adapter=None):
-   self.client = adapter()
+  def __init__(self, adapter=None):
+    self.client = adapter()
 
- def find_all(self, selector):
-   return self.client.find_all(selector)
+  def find_all_stars(self, selector):
+    return self.client.find_all_stars(selector)
  
- def find(self, selector):
-   return self.client.find(selector)
+  def find_star(self, selector):
+    return self.client.find_star(selector)
+
+  def find_user(self, selector):
+    return self.client.find_user(selector)
+  
+  def create_user(self, selector):
+    return self.client.create_user(selector)
  
- def create(self, anonstar):
-   return self.client.create(anonstar)
+  def create_star(self, anonstar):
+    return self.client.create_star(anonstar)
   
- def update(self, selector, anonstars):
-   return self.client.update(selector, anonstars)
+  def update_star(self, selector, anonstars):
+    return self.client.update_star(selector, anonstars)
   
- def delete(self, selector):
-   return self.client.delete(selector)
+  def delete_star(self, selector):
+    return self.client.delete.star(selector)
