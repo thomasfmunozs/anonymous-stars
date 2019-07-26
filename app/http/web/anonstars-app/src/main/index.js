@@ -14,7 +14,7 @@ class Main extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route path="/index" component={Home} />
+            <Route path="/home" component={Home} />
             <Route path="/give-star" component={GiveStar} />
           </Switch>
         </Router>

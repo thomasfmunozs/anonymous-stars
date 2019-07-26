@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
+import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom'
 
 import { UserConsumer } from '../userContext';
+
+import LoginComponent from './LoginComponent'
 
 import style from './style.css'
 
@@ -29,14 +30,12 @@ class Login extends Component {
             return <Redirect to='/home' />
           }
           return (
-            <div>
-              <div>
-                <Input onChange={this.handleUsernameChange} />
-              </div>
-              <div style={style.button}>
-                <Button variant="contained" color="primary" onClick={this.login(setUser)}>Login</Button>
-              </div>
-            </div>
+            <Container>
+              <LoginComponent
+                onUsernameChange={this.handleUsernameChange}
+                handleLogin={this.login(setUser)}
+              />
+            </Container>
           )
         }}
       </UserConsumer>
