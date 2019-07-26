@@ -21,7 +21,7 @@ class Service(object):
         return self.dump_user(user)
     
     def save_user(self, user):
-        self.repo_client.create_user(user.data)
+        self.repo_client.create_user(user)
         return self.dump_user(user)
 
     def create_star(self, snd_user, rcv_user, comment, is_anon=None):

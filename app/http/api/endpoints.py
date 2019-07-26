@@ -40,7 +40,7 @@ def get_user(username=None):
 
 
 @app.route("/users", methods=["GET"])  # @login_required
-def get_user(username=None):
+def user(username=None):
     if username is None:
         return 404
 
