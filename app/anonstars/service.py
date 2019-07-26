@@ -4,26 +4,35 @@ from .schema import UserSchema, StarSchema
 
 
 class Service(object):
-    def __init__(self, user_id, repo_client=Repository(adapter=MongoRepository)):
-        self.repo_client = repo_client
-        self.user_id = user_id
+
+    def __init__(self):
+        self.repo_client = Repository(adapter=MongoRepository)
 
         if not user_id:
             raise Exception("user id not provided")
 
-    def find_all_stars(self):
-        kudos = self.repo_client.find_all({'user_id': self.user_id})
-        return [self.dump(kudo) for kudo in kudos]
+    def find_all_stars(self, start_date=None):
+        stars = self.repo_client.find_all_stars({'date': {'$gt': start_date}}) if start_date else self.repo_client.find_all_stars({})
+        return [self.dump_star(star) for star in stars]
 
-    def find_kudo(self, repo_id):
-        kudo = self.repo_client.find({'user_id': self.user_id, 'repo_id': repo_id})
-        return self.dump(kudo)
+    def find_star(self, rcv_user):
+        star = self.repo_client.find_star({'rcv_user': rcv_user})
+        return self.dump_star(star)
+    
+    def find_user(self, username):
+        user = self.repo_client.find_user({'username': username})
+        return self.dump_user(user)
+    
+    def save_user(self, user):
+        self.repo_client.create_user(user.data)
+        return self.dump_user(user)
 
-    def create_kudo_for(self, starReview):
-        self.repo_client.create(self.prepare_kudo(starReview))
-        return self.dump(starReview.data)
+    def create_star(self, snd_user, rcv_user, comment, is_anon=None):
+        data = self.prepare_star(snd_user, rcv_user, comment, is_anon)
+        self.repo_client.create_star(data)
+        return self.dump_star(data)
 
-    def update_kudo_with(self, repo_id, starReview):
+    def update_star_with(self, repo_id, starReview):
         records_affected = self.repo_client.update({'user_id': self.user_id, 'repo_id': repo_id}, self.prepare_kudo(starReview))
         return records_affected > 0
 
@@ -31,10 +40,15 @@ class Service(object):
         records_affected = self.repo_client.delete({'user_id': self.user_id, 'repo_id': repo_id})
         return records_affected > 0
 
-    def dump(self, data):
+    def dump_star(self, data):
         return StarSchema(exclude=['_id']).dump(data).data
 
-    def prepare_kudo(self, starReview):
-        data = starReview.data
-        data['user_id'] = self.user_id
+    def dump_user(self, data):
+        return UserSchema(exclude=['_id']).dump(data).data
+
+    def prepare_star(self, snd_user, rcv_user, comment, is_anon=None):
+        if is_anon:
+            data = {'rcv_user': rcv_user, 'snd_user': snd_user, 'comments': comments, 'date': new Date(), 'is_anon': is_anon}
+        else:
+            data = {'rcv_user': rcv_user, 'snd_user': snd_user, 'comments': comments, 'date': new Date()}
         return data
