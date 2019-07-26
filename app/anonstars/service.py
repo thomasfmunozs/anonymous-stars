@@ -21,8 +21,9 @@ class Service(object):
         return self.dump_user(user)
     
     def save_user(self, user):
-        self.repo_client.create_user(user)
-        return self.dump_user(user)
+        data = self.prepare_user(user.username, user.email)
+        self.repo_client.create_user(data)
+        return self.dump_user(data)
 
     def create_star(self, snd_user, rcv_user, comment, is_anon=None):
         data = self.prepare_star(snd_user, rcv_user, comment, is_anon)
@@ -42,6 +43,10 @@ class Service(object):
 
     def dump_user(self, data):
         return UserSchema(exclude=['_id']).dump(data).data
+    
+    def prepare_user(self, username, email)
+        data = {'username': username, 'email': email}
+        return data
 
     def prepare_star(self, snd_user, rcv_user, comments, is_anon=None):
         from datetime import datetime
