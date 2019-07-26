@@ -21,4 +21,4 @@ class Repository(object):
     return self.client.update_star(selector, anonstars)
   
   def delete_star(self, selector):
-    return self.client.delete:star(selector)
+    return self.client.delete.star(selector)

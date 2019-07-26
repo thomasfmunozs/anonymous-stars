@@ -8,9 +8,6 @@ class Service(object):
     def __init__(self):
         self.repo_client = Repository(adapter=MongoRepository)
 
-        if not user_id:
-            raise Exception("user id not provided")
-
     def find_all_stars(self, start_date=None):
         stars = self.repo_client.find_all_stars({'date': {'$gt': start_date}}) if start_date else self.repo_client.find_all_stars({})
         return [self.dump_star(star) for star in stars]
@@ -46,9 +43,11 @@ class Service(object):
     def dump_user(self, data):
         return UserSchema(exclude=['_id']).dump(data).data
 
-    def prepare_star(self, snd_user, rcv_user, comment, is_anon=None):
+    def prepare_star(self, snd_user, rcv_user, comments, is_anon=None):
+        from datetime import datetime
+        curr_date = datetime.now()
         if is_anon:
-            data = {'rcv_user': rcv_user, 'snd_user': snd_user, 'comments': comments, 'date': new Date(), 'is_anon': is_anon}
+            data = {'rcv_user': rcv_user, 'snd_user': snd_user, 'comments': comments, 'date': curr_date, 'is_anon': is_anon}
         else:
-            data = {'rcv_user': rcv_user, 'snd_user': snd_user, 'comments': comments, 'date': new Date()}
+            data = {'rcv_user': rcv_user, 'snd_user': snd_user, 'comments': comments, 'date': curr_date}
         return data
